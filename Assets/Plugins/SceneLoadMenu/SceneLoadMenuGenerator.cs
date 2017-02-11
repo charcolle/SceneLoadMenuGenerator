@@ -96,8 +96,8 @@ public static class SceneLoadMenu {
         /// Load scenes from project and return scene class list
         /// </summary>
         /// <returns></returns>
-        private static List<Scenes> getScenesFromProject() {
-            var sceneList = new List<Scenes>();
+        private static List<Scene> getScenesFromProject() {
+            var sceneList = new List<Scene>();
 
             // search scenes
             var guids = AssetDatabase.FindAssets( SEARCH_SCENE_FILTER );
@@ -116,7 +116,7 @@ public static class SceneLoadMenu {
                     if ( duplicates > 0 ) sceneName += "_" + duplicates.ToString();
 
                     // add list
-                    sceneList.Add( new Scenes( path, sceneName ) );
+                    sceneList.Add( new Scene( path, sceneName ) );
                 } else {
                     Debug.LogError( "This Scene contains inValid character. " + sceneFileName );
                     continue;
@@ -129,7 +129,7 @@ public static class SceneLoadMenu {
         /// <summary>
         /// Generate scene load method string from list and return method string
         /// </summary>
-        private static string generateMethods( List<Scenes> sceneList ) {
+        private static string generateMethods( List<Scene> sceneList ) {
             StringBuilder m_methods = new StringBuilder( sceneList.Count );
             
             for ( int i = 0; i < sceneList.Count; i++ ) {
@@ -151,7 +151,7 @@ public static class SceneLoadMenu {
         /// <param name="menu"></param>
         /// <param name="priority"></param>
         /// <returns></returns>
-        private static string generateMethod( Scenes scene, string methodTemplate, string menu, string priority, string type = "" ) {
+        private static string generateMethod( Scene scene, string methodTemplate, string menu, string priority, string type = "" ) {
             var m_method = methodTemplate;
             var m_loadMenu = menu.Replace( REPLACE_NAME, scene.sceneName );
 
@@ -197,13 +197,13 @@ public static class SceneLoadMenu {
         // Class
         //===========================================
 
-        class Scenes {
+        class Scene {
             public string path;
             public string sceneName;
             public bool inBuild;
             public bool isTest;
 
-            public Scenes( string _path, string _scenename ) {
+            public Scene( string _path, string _scenename ) {
                 path        = _path;
                 sceneName   = _scenename;
                 inBuild = EditorBuildSettings.scenes.Any( b => b.path == path );
