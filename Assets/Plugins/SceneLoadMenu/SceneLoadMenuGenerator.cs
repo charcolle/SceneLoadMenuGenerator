@@ -77,7 +77,7 @@ public static class SceneLoadMenu {
             // load scenes from project and cache at list
             var sceneList = getScenesFromProject();
             if ( sceneList == null || sceneList.Count == 0 ) {
-                Debug.LogWarning("sceneが見つからなかった");
+                Debug.LogWarning( "no scenes is found." );
                 return;
             }
 
