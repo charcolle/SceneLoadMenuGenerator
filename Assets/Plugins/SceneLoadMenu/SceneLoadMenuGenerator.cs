@@ -22,34 +22,35 @@ namespace charcolle.Utility {
         private const string TEMPLATE_CLASS = @"
 using UnityEditor;
 using UnityEditor.SceneManagement;
+namespace charcolle.Utility {
+        public static class SceneLoadMenu {
 
-public static class SceneLoadMenu {
+        #METHODS#
 
-#METHODS#
-
+        }
 }
 ";
         private const string TEMPLATE_LOAD = @"
-    [MenuItem( #SCENEMENU#, false, #PRIORITY# )]
-    static void Open_#SCENENAME#() {
-        if ( EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo() ) {
-            EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Single );
+        [MenuItem( #SCENEMENU#, false, #PRIORITY# )]
+        static void Open_#SCENENAME#() {
+            if ( EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo() ) {
+                EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Single );
+            }
         }
-    }
 
 ";
         private const string TEMPLATE_ADD = @"
-    [MenuItem( #SCENEMENU#, false, #PRIORITY# )]
-    static void Open_#SCENENAME#() {
-        if ( EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo() ) {
-            EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Additive );
+        [MenuItem( #SCENEMENU#, false, #PRIORITY# )]
+        static void Open_#SCENENAME#() {
+            if ( EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo() ) {
+                EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Additive );
+            }
         }
-    }
 
 ";
-        private const string MENU_NORMAL = "\"Scenes/Load/Scene/#SCENENAME#\"";
-        private const string MENU_BUILD = "\"Scenes/Load/Build/#SCENENAME#\"";
-        private const string MENU_TEST = "\"Scenes/Load/Test Scene/#SCENENAME#\"";
+        private const string MENU_NORMAL = "\"Scenes/Load Scene/Scene/#SCENENAME#\"";
+        private const string MENU_BUILD = "\"Scenes/Load Scene/Build/#SCENENAME#\"";
+        private const string MENU_TEST = "\"Scenes/Load Scene/Test/#SCENENAME#\"";
         private const string MENU_ADD  = "\"Scenes/Add Scene/#SCENENAME#\"";
 
         private const string PRIORITY_LOAD   = "23";
