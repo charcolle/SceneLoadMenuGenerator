@@ -37,7 +37,6 @@ namespace charcolle.Utility {
                 EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Single );
             }
         }
-
 ";
         private const string TEMPLATE_ADD = @"
         [MenuItem( #SCENEMENU#, false, #PRIORITY# )]
@@ -46,7 +45,6 @@ namespace charcolle.Utility {
                 EditorSceneManager.OpenScene( #SCENEPATH#, OpenSceneMode.Additive );
             }
         }
-
 ";
         private const string MENU_NORMAL = "\"Scenes/Load Scene/Scene/#SCENENAME#\"";
         private const string MENU_BUILD = "\"Scenes/Load Scene/Build/#SCENENAME#\"";
@@ -109,12 +107,18 @@ namespace charcolle.Utility {
             for ( int i = 0; i < sceneNum; i++ ) {
                 var path = AssetDatabase.GUIDToAssetPath( guids[i] );
                 var sceneFileName = Path.GetFileNameWithoutExtension( path );
+
                 if ( !Regex.IsMatch( sceneFileName, PATTERN_SCENENAME_INVALID ) ) {
                     // avoid including space in method
                     var sceneName = sceneFileName.Replace( " ", "_" );
+                    sceneName = sceneName.Replace( "(", "_" );
+                    sceneName = sceneName.Replace( ")", "_" );
+                    sceneName = sceneName.Replace( "-", "_" );
+                    sceneName = sceneName.Replace( "&", "_" );
                     // check scene name duplicate
                     var duplicates = sceneList.Count( s => s.sceneName == sceneName );
-                    if ( duplicates > 0 ) sceneName += "_" + duplicates.ToString();
+                    if ( duplicates > 0 )
+                        sceneName += "_" + duplicates.ToString();
 
                     // add list
                     sceneList.Add( new Scene( path, sceneName ) );
@@ -208,7 +212,7 @@ namespace charcolle.Utility {
                 path        = _path;
                 sceneName   = _scenename;
                 inBuild = EditorBuildSettings.scenes.Any( b => b.path == path );
-                isTest = sceneName.ToLower().Contains( "test" ) || sceneName.ToLower().Contains( "debug" );
+                isTest = sceneName.ToLower().Contains( "test" ) || sceneName.ToLower().Contains( "debug" ) || path.ToLower().Contains( "example" ) || path.ToLower().Contains( "plugin" );
             }
         }
     }
